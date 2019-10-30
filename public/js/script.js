@@ -1,4 +1,4 @@
-$('#date1').datepicker({
+/*$('#date1').datepicker({
     uiLibrary: 'bootstrap4'
 });
 $('#date2').datepicker({
@@ -7,4 +7,13 @@ $('#date2').datepicker({
 
 $('#dob1').datepicker({
     uiLibrary: 'bootstrap4'
+});*/
+
+$(document).ready(function () {
+    if ($(".errors").length > 0) {
+        $("#myModal").modal('show');
+        console.log("runnnnn");
+    }
 });
+
+
