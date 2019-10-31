@@ -11,8 +11,11 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@sendgrid/mail": "^6.4.0",
+    "cement": "github:bredele/binding",
     "express": "^4.17.1",
     "express-handlebars": "^3.1.0",
+    "mongoose": "^5.7.7",
     "nodemon": "^1.19.3"
   }
 }
