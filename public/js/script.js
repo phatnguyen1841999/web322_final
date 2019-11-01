@@ -5,4 +5,8 @@ $(document).ready(function () {
     }
 });
 
+$('#dob').datepicker({
+    uiLibrary: 'bootstrap4'
+});
+
 

@@ -99,4 +99,10 @@ ul.social-buttons li a:active, ul.social-buttons li a:focus, ul.social-buttons l
 }
 
 
+#dis_err
+{
+  color: red;
+  margin: 15px;
+}
+
 

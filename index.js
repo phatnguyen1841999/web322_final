@@ -1,9 +1,9 @@
 const express = require('express');
 const exphbs = require('express-handlebars');
 const bodyParser = require('body-parser');
-const sgMail = require('@sendgrid/mail');
-const mongoose = require('mongoose')
-
+const mongoose = require('mongoose');
+const key = require('./config/key');
+const schema = require('./config/schema') 
 
 const app = express();
 
@@ -35,6 +35,20 @@ app.get('/room-listing', (req, res) => {
 app.get('/sign-up', (req, res) => {
     res.render("signup");
 });
+
+
+//To connect your project to your MongoDB
+
+mongoose.connect(key.key.MONGO_URL, {useNewUrlParser: true})
+.then(()=>
+{
+    console.log("Connect to database successfully")
+})
+.catch(err =>
+    {
+        console.log(`${err}`)
+    })
+
 
 
 // For registration form, when user click submit this is what happen
@@ -93,46 +107,61 @@ app.post('/messages', (req, res) => {
 
     else {
         //*SEND CONFIRMATION EMAIL
-        /*sgMail.setApiKey('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')
-        const msg = {
-            to: req.body.email,
+
+        const nodemailer = require('nodemailer');
+         const sgTransport = require('nodemailer-sendgrid-transport');
+
+         const options = {
+            auth: {
+                api_key: `${key.key.SENDGRID_KEY}`
+            }
+        }
+
+        const mailer = nodemailer.createTransport(sgTransport(options));
+
+        const email = {
+            to: `${req.body.email}`,
             from: 'ttpnguyen2@myseneca.ca',
             subject: 'Confirmation Email',
             text: 'This is a confirmation email',
             html: '<strong>Hi! This is a confirmation email to let you know that you are now our member.</strong>',
         };
-        sgMail.send(msg);
-        res.redirect("/");*/
+         
+        mailer.sendMail(email, (err, res)=> {
+            if (err) { 
+                console.log(err) 
+            }
+            console.log(res);
+        });
 
 
         /*ADD INFORMATION TO MONGODB DATABASE */
         
-        //To connect your project to your MongoDB
-        mongoose.connect('mongodb+srv://thanh-nguyen:phatnguyen@assignment-khvou.mongodb.net/assignment?retryWrites=true&w=majority', {useNewUrlParser: true})
-        .then(()=>
-        {
-            console.log("Connect successfully")
-        })
-        .catch(err =>
-            {
-                console.log(`${err}`)
-            })
-        res.redirect('/')
-
+        
         //Add data to MongoDB database
-        app.post('/',(req,res)=>
-        {
-            const schema = mongoose.Schema(
+        const info = mongoose.model('info', schema.schema_form);
+        const formData = 
+            {
+                email: req.body.email,
+                fname: req.body.first_name,
+                lname: req.body.last_name,
+                birthdate: req.body.dob,
+                username: req.body.username,
+                password: req.body.password
+            }
+            
+            const user = new info(formData);
+
+            user.save()
+            .then(()=>
+            {
+                console.log("Added")
+            })
+            .catch(err=>
                 {
-                    email: String,
-                    fname: String,
-                    lname: String,
-                    username: String,
-                    password: String,
-                    dob: String 
-                }
-            );
-        } );
+                    console.log(`${err}`)
+                })
+            res.redirect("/");
     }
 
 
