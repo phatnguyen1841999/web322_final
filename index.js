@@ -113,7 +113,7 @@ app.post('/messages', (req, res) => {
 
          const options = {
             auth: {
-                api_key: `${key.key.SENDGRID_KEY}`
+                api_key: `${key.key.SENDGRID_KEY1}`
             }
         }
 
