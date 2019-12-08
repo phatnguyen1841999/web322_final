@@ -1,10 +1,9 @@
 const express = require("express")
 const router = express.Router()
 const roomModel = require("../models/room")
-const hasAccess= require("../middleware/auth");
 const path = require("path")
-
-router.post("/profile/add-room", hasAccess, (req, res) => {
+const hasAccessAd = require("../middleware/AdminAuth")
+router.post("/profile/add-room", hasAccessAd, (req, res) => {
     //validation
     const newRoom = {
         title: req.body.title,
@@ -74,14 +73,14 @@ router.post("/profile/add-room", hasAccess, (req, res) => {
 
 
 
-router.get("/profile/add-room", hasAccess, (req, res) => 
+router.get("/profile/add-room", hasAccessAd, (req, res) => 
 {
     res.render("User/adminDashboard")
 });
 
 
 //This routes is used to display room from the database
-router.get("/room-listing",hasAccess,(req,res)=>
+router.get("/room-listing",hasAccessAd,(req,res)=>
 {
     roomModel.find()
     .then((room)=>
@@ -97,7 +96,7 @@ router.get("/room-listing",hasAccess,(req,res)=>
 
 //Edit Room
 
-router.get("/edit/:id",hasAccess,(req,res)=>
+router.get("/edit/:id",hasAccessAd,(req,res)=>
 {
     roomModel.findById(req.params.id)
     .then((room)=>{
@@ -113,7 +112,7 @@ router.get("/edit/:id",hasAccess,(req,res)=>
 
 //edit room
 
-router.put("/edit/:id",hasAccess,(req,res)=>
+router.put("/edit/:id",hasAccessAd,(req,res)=>
 {
     roomModel.findById(req.params.id)
     .then((room)=>{

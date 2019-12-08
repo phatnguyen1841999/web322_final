@@ -7,7 +7,7 @@ const roomModel = require("../models/room")
 const hasAccess = require("../middleware/auth");
 const bcrypt = require("bcryptjs")
 const path = require("path")
-
+const hasAccessAd = require("../middleware/AdminAuth")
 
 //create route handler functions for home page
 // the "/" shows us that when we go to the main page the home template will be displayed
@@ -273,7 +273,7 @@ router.get("/user/profile", hasAccess, (req, res) => {
 });
 
 // Route to admin dashboard
-router.get("/admin/profile", hasAccess, (req, res) => {
+router.get("/admin/profile", hasAccessAd, (req, res) => {
 
     res.render("User/adminDashboard")
 })
