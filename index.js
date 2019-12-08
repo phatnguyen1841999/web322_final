@@ -2,11 +2,11 @@ const express = require('express');
 const exphbs = require('express-handlebars');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
-const key = require('./config/key');
 const session = require("express-session"); // package used to create session
 const fileupload = require("express-fileupload")
 const methodOverride = require('method-override'); 
-
+//This loads all our environment variables from the keys.env
+require("dotenv").config({path:'./config/key.env'});
 
 
 const app = express();

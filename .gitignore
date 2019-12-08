@@ -1,2 +1,2 @@
 nodes_modules
-config/key.js
+config/key.env
