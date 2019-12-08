@@ -1,0 +1,43 @@
+
+<h2>Hi admin</h2>
+<form id="form_search" class="justify-content-center col-sm-4" method="POST" action="/admin/profile/add-room"
+  enctype="multipart/form-data">
+  {{#each errors_f}}
+  <div class="isa_error" id="reg_err">
+    <i class="fa fa-times-circle"></i>
+    {{this}}
+  </div>
+  {{/each}}
+  <h4>Be a host with us</h4>
+  <div class="form-group">
+    <label for="title">Room Title</label>
+    <input type="title" class="form-control" id="title" name="title" placeholder="Title">
+  </div>
+
+  <div class="form-row" id="checkincheckout">
+    <div class="col-sm">
+      <label for="">Price</label>
+      <input type="price" class="form-control" id="price" placeholder="Price" name="price">
+    </div>
+  </div>
+
+  <div class="form-row">
+    <label for="description">Description</label>
+    <input type="text" class="form-control" id="description" placeholder="Apartment, studio, or floor"
+      name="description">
+  </div>
+
+  </div>
+
+  <div class="form-group" id="number_of_guests">
+    <label for="location">City</label>
+    <input type="text" class="form-control" id="location" placeholder="Toronto, Ottawa" name="location">
+  </div>
+
+  <input type="file" class="form-control" name="profilePic" value="Add a picture here">
+
+  <div class="form-group">
+    <button type="submit" class="btn btn-secondary form-control" id="add" value="Add Room">Add Room</button>
+  </div>
+</form>
+

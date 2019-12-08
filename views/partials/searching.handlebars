@@ -1,0 +1,58 @@
+<form id="form_search" class="justify-content-left col-sm-4" method = "POST" action = "/results">
+        <h4>Book unique places to stay and things to do</h4>
+        <div class="form-group">
+            <label>Where</label>
+            <select class="form-control" name = "location">
+                <option selected disabled>Please choose a city</option>
+                <option value="Toronto">Toronto</option>
+                <option value="Vancouver">Vancouver</option>
+                <option value="Ottawa">Ottawa</option>
+                <option value="Calgary">Calgary</option>
+            </select>
+        </div>
+
+        <div class="form-row" id="checkincheckout">
+            <div class="col-sm">
+                <label>Check in</label>
+                <input type="date" id="date1" placeholder="dd-mm-yyyy" class="form-control">
+            </div>
+
+            <div class="col-sm">
+                <label>Check out</label>
+                <input type="date" id="date2" placeholder="dd-mm-yyyy" class="form-control">
+            </div>
+
+        </div>
+
+        <div class="form-group" id="number_of_guests">
+            <label>GUEST</label>
+            <input type="text" placeholder="Number of guests" id="number" class="form-control">
+        </div>
+
+        <div class="form-row" id="adult-children">
+            <div class="col-sm">
+                <label>Adult</label>
+                <select class="form-control">
+                    <option value=1>1</option>
+                    <option value=2>2</option>
+                    <option value=3>3</option>
+                    <option value=4>4</option>
+                </select>
+            </div>
+
+            <div class="col-sm">
+                <label>Children</label>
+                <select class="form-control">
+                    <option value=0>0</option>
+                    <option value=1>1</option>
+                    <option value=2>2</option>
+                    <option value=3>3</option>
+                    <option value=4>4</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <button type="submit" class="btn btn-secondary form-control" id="btnSearch" value="search">Search</button>
+        </div>
+    </form>

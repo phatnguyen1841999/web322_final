@@ -1,11 +1,11 @@
 <!--ADD GRID-->
-    <div class="row">
+<!--    <div class="row">
       <div class="col-lg-4 col-sm-6 portfolio-item">
         <div class="card h-100">
           <a href="#"><img class="card-img-top" src="/img/room/1.jpg" alt=""></a>
           <div class="card-body">
             <h4 class="card-title">
-              <a href="#">Beautiful house for family</a>
+              <a href="#">Cosy Room</a>
             </h4>
             <p class="card-text">
                 Rating: 3.4/5.0<br>
@@ -75,3 +75,32 @@
         </div>
       </div>
     </div>
+
+
+    {{#each list}}
+    <div>
+      <h2>{{this.title}}</h2>
+    </div>
+    {{/each}}
+-->
+
+  <div class="row">
+    {{#each list}}
+    <div class="col-lg-4 col-sm-6 portfolio-item">
+      <div class="card h-100">
+        <a href="#"><img class="card-img-top" src="/upload/{{this.profilePic}}" alt=""></a>
+        <div class="card-body">
+          <h4 class="card-title">
+            <a href="#">{{this.title}}</a>
+          </h4>
+          <p class="card-text">
+            Location: {{this.location}}<br>
+            Price: {{this.price}}<br>
+            Description: {{this.description}}
+          </p>
+        </div>
+      </div>
+    </div>
+
+    {{/each}}
+  </div>

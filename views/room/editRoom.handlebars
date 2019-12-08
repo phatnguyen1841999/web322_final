@@ -1,0 +1,41 @@
+
+  <form id="form_search" class="justify-content-center col-sm-4" method="POST" action="/admin/edit/{{allRoom._id}}/?_method=PUT"
+  enctype="multipart/form-data">
+  {{#each errors_f}}
+  <div class="isa_error" id="reg_err">
+    <i class="fa fa-times-circle"></i>
+    {{this}}
+  </div>
+  {{/each}}
+  <h4>Edit your room</h4>
+  <div class="form-group">
+    <label for="title">Room Title</label>
+    <input type="title" class="form-control" id="title" name="title" value="{{allRoom.title}}">
+  </div>
+
+  <div class="form-row" id="checkincheckout">
+    <div class="col-sm">
+      <label for="">Price</label>
+      <input type="price" class="form-control" id="price" value="{{allRoom.price}}" name="price">
+    </div>
+  </div>
+
+  <div class="form-row">
+    <label for="description">Description</label>
+    <input type="text" class="form-control" id="description" value="{{allRoom.description}}"
+      name="description">
+  </div>
+
+  </div>
+
+  <div class="form-group" id="number_of_guests">
+    <label for="location">City</label>
+    <input type="text" class="form-control" id="location" value="{{allRoom.location}}" name="location">
+  </div>
+
+  <input type="file" class="form-control" name="profilePic" value="Add a picture here">
+
+  <div class="form-group">
+    <button type="submit" class="btn btn-secondary form-control" id="add" value="Edit Room">Edit Room</button>
+  </div>
+</form>

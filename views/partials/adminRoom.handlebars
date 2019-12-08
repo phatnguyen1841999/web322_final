@@ -1,0 +1,29 @@
+{{#if admin}}
+<div class="row">
+    {{#each list}}
+
+    <div class="col-lg-4 col-sm-6 portfolio-item">
+        <div class="card h-100">
+            <a href="#"><img class="card-img-top" src="/upload/{{this.profilePic}}" alt=""></a>
+            <div class="card-body">
+                <h4 class="card-title">
+                    <a href="#">{{this.title}}</a>
+                </h4>
+                <p class="card-text">
+                    Location: {{this.location}}<br>
+                    Price: {{this.price}}<br>
+                    Description: {{this.description}}
+                </p>
+                <a href="/admin/edit/{{this._id}}">Edit Room</a> <br><br>
+                <form method="POST" action="/room/book">
+                    <input type="hidden" value="{{this.id}}" name="book">
+                    <input type="hidden" value="{{admin.id}}" name="id_u">
+                    <button type="submit" value="search">BOOK NOW</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    {{/each}}
+</div>
+{{/if}}

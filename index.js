@@ -3,7 +3,11 @@ const exphbs = require('express-handlebars');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const key = require('./config/key');
-const schema = require('./config/schema') 
+const session = require("express-session"); // package used to create session
+const fileupload = require("express-fileupload")
+const methodOverride = require('method-override'); 
+
+
 
 const app = express();
 
@@ -18,28 +22,39 @@ app.set('view engine', 'handlebars');
 // This tells Express to parse all submitted form data into the body of the request object
 app.use(bodyParser.urlencoded({ extended: false }));
 
-//create route handler functions for home page
-// the "/" shows us that when we go to the main page the home template will be displayed
-app.get('/', (req, res) => {
-    res.render("homepage");
-});
+//This is how you map your file upload to express
+app.use(fileupload()) // map your file up load to express
 
-//create route handler function for room listing page
+//import routes objects
+const userRoutes = require("./routes/UserRoutes")
+const roomRoutes = require("./routes/roomRoutes")
 
-app.get('/room-listing', (req, res) => {
-    res.render("room");
-});
+// override with POST having ?_method=DELETE
+app.use(methodOverride('_method'));
 
-//create route handler function for sign-up page
+//This is used to make express load all static resources within the public folder
+app.use(express.static("public"));
 
-app.get('/sign-up', (req, res) => {
-    res.render("signup");
-});
+//session
+app.use(session({secret:"This is my secret key. This should not be shown to everyone"}))
+
+app.use((req,res,next)=>{
+
+    //This is a global variable that can be accessed by templates
+    res.locals.user= req.session.userInfo;
+    res.locals.admin = req.session.adminInfo;
+    next();
+})
+
+//MAPS routes object
+
+app.use("/", userRoutes)
+app.use("/admin", roomRoutes)
 
 
 //To connect your project to your MongoDB
 
-mongoose.connect(key.key.MONGO_URL, {useNewUrlParser: true})
+mongoose.connect(key.key.MONGO_URL, {useUnifiedTopology: true, useNewUrlParser: true,})
 .then(()=>
 {
     console.log("Connect to database successfully")
@@ -49,126 +64,7 @@ mongoose.connect(key.key.MONGO_URL, {useNewUrlParser: true})
         console.log(`${err}`)
     })
 
-
-
-// For registration form, when user click submit this is what happen
-app.post('/messages', (req, res) => {
-    /***Server-sided validation***/
-    const error = []; // initialize the error array to zero to store error message
-    if (req.body.email == "") {
-        error.push("Email is empty");
-    }
-
-
-    if (req.body.first_name == "") {
-        error.push("Please Enter your First Name");
-    }
-
-    if (req.body.last_name == "") {
-        error.push("Please Enter your Last Name");
-    }
-
-    if (req.body.username == "") {
-        error.push("Please Enter your username");
-    }
-
-    if (req.body.password == "") {
-        error.push("Please Enter your Password");
-    }
-
-    if (req.body.password != '') {
-
-        var pass_len = Object.keys(req.body.password).length;
-        var pass = req.body.password;
-        //by using the method above we can convert the req.body to object 
-        if (pass_len < 6) {
-            error.push("Password must have at least 6 characters");
-        }
-
-        // Password must contain one character and one digit
-        else {
-            // regrex allows us to set condition for password
-            //the regrex below set that password must have one character and one digit
-            var reg = /^(?=.*[0-9])(?=.*[a-zA-Z])([a-zA-Z0-9]+)$/;
-            if (!reg.test(req.body.password)) {
-                error.push("Password must contain at least 1 character and 1 digit");
-            }
-        }
-
-    }
-
-    //** If there are errors, redirect to the homepage and display them**/
-    if (error.length > 0) {
-
-        res.render('homepage', {
-            message: error
-        });
-    }
-
-    else {
-        //*SEND CONFIRMATION EMAIL
-
-        const nodemailer = require('nodemailer');
-         const sgTransport = require('nodemailer-sendgrid-transport');
-
-         const options = {
-            auth: {
-                api_key: `${key.key.SENDGRID_KEY1}`
-            }
-        }
-
-        const mailer = nodemailer.createTransport(sgTransport(options));
-
-        const email = {
-            to: `${req.body.email}`,
-            from: 'ttpnguyen2@myseneca.ca',
-            subject: 'Confirmation Email',
-            text: 'This is a confirmation email',
-            html: '<strong>Hi! This is a confirmation email to let you know that you are now our member.</strong>',
-        };
-         
-        mailer.sendMail(email, (err, res)=> {
-            if (err) { 
-                console.log(err) 
-            }
-            console.log(res);
-        });
-
-
-        /*ADD INFORMATION TO MONGODB DATABASE */
-        
-        
-        //Add data to MongoDB database
-        const info = mongoose.model('info', schema.schema_form);
-        const formData = 
-            {
-                email: req.body.email,
-                fname: req.body.first_name,
-                lname: req.body.last_name,
-                birthdate: req.body.dob,
-                username: req.body.username,
-                password: req.body.password
-            }
-            
-            const user = new info(formData);
-
-            user.save()
-            .then(()=>
-            {
-                console.log("Added")
-            })
-            .catch(err=>
-                {
-                    console.log(`${err}`)
-                })
-            res.redirect("/");
-    }
-
-
-});
-
-//
-
+   
 //create an express web server
 const PORT = process.env.PORT || 2000;
 

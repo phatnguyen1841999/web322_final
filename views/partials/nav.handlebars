@@ -1,0 +1,53 @@
+<nav class="navbar navbar-expand-lg navbar-dark fixed-top" id="mainNav">
+    <div class="container">
+        <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse"
+            data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false"
+            aria-label="Toggle navigation">
+            Menu
+            <i class="fas fa-bars"></i>
+        </button>
+        <a class="navbar-brand" href="/">
+            <img src="/img/airbnb-logo.png" width="auto" height="60" alt="Logo" id="logo">
+        </a>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+            <ul class="navbar-nav text-uppercase ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link js-scroll-trigger" href="/">Home</a>
+                </li>
+                <li class="nav-item">
+                    {{#if admin}}
+                    <a class="nav-link js-scroll-trigger" href="/admin/room-listing">Book a Room</a>
+                    {{else if user}}
+                    <a class="nav-link js-scroll-trigger" href="/user/room-listing">Book a Room</a>
+                    {{else}}
+                    <a class="nav-link js-scroll-trigger" href="/room-listing">Check our Rooms</a>
+                    {{/if}}
+                </li>
+                {{#if user}}
+                <li class="nav-item">
+                    <div class="dropdown">
+                        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
+                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Hi, {{user.fname}} {{user.lname}}
+                        </button>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <a class="dropdown-item" href="/admin/profile">Dashboard</a>
+                            <a class="dropdown-item" href="/room-listing">Your Rooms</a>
+                        </div>
+                    </div>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/user/logout"">Logout</a>
+                    </li>
+                    {{else}}
+                    <li class=" nav-item">
+                        <a class="nav-link" href="#" data-toggle="modal" data-target="#myModal">Register</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#" data-toggle="modal" data-target="#myModal1">Login</a>
+                </li>
+                {{/if}}
+            </ul>
+        </div>
+    </div>
+</nav>
