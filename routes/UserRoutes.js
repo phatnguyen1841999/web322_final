@@ -301,7 +301,7 @@ router.post("/results", (req, res) => {
         .catch(err => console.log(err))
 })
 
-//book room
+/*book room
 
 router.get("/room/book",hasAccess,(req,res)=>
 {
@@ -318,6 +318,6 @@ router.post("/room/book",hasAccess,(req,res)=>
     console.log(req.body.id_us)
     /*user.save()
     .then((user) => console.log("Added new booked room"))
-    .catch(err=>console.log(err))*/
-})
+    .catch(err=>console.log(err))
+})*/
 module.exports = router

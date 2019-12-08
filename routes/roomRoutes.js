@@ -86,7 +86,7 @@ router.get("/room-listing",hasAccess,(req,res)=>
     roomModel.find()
     .then((room)=>
     {
-        res.render("partials/adminRoom", 
+        res.render("room/adminRoom", 
         {
             list: room
         })
