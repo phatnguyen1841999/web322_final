@@ -31,7 +31,11 @@
                             Hi, {{user.fname}} {{user.lname}}
                         </button>
                         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            {{#if admin}}
                             <a class="dropdown-item" href="/admin/profile">Dashboard</a>
+                            {{else}}
+                            <a class="dropdown-item" href="/user/profile">Dashboard</a>
+                            {{/if}}
                             <a class="dropdown-item" href="/room-listing">Your Rooms</a>
                         </div>
                     </div>
